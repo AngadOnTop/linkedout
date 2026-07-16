@@ -1,10 +1,10 @@
 # LinkedOut
 
-A Google Translate-style parody that uses real AI to convert painfully ordinary thoughts into gloriously obnoxious LinkedIn posts.
+A Google Translate-style parody that uses real AI to convert painfully ordinary thoughts into gloriously obnoxious LinkedIn posts. It defaults to OpenRouter's free-model router and can optionally use OpenAI.
 
 ## Setup
 
-Install dependencies, create a local environment file, and add an OpenAI API key:
+Install dependencies, create a local environment file, and add a free OpenRouter API key:
 
 ```bash
 npm install
@@ -14,11 +14,11 @@ cp .env.example .env
 Edit `.env`:
 
 ```env
-OPENAI_API_KEY=your_api_key_here
-OPENAI_MODEL=gpt-5.6-luna
+OPENROUTER_API_KEY=your_openrouter_key_here
+OPENROUTER_MODEL=openai/gpt-oss-20b:free
 ```
 
-The key is read only by the local server and is never included in the browser bundle.
+The key is read only by the local server and is never included in the browser bundle. If `OPENROUTER_API_KEY` is absent, the server can still use the optional `OPENAI_API_KEY` configuration shown in `.env.example`.
 
 ## Development
 
@@ -33,7 +33,7 @@ npm run build
 npm start
 ```
 
-The production server serves the built React app and the `/api/translate` endpoint together. Set `OPENAI_API_KEY` in your hosting provider's server-side environment variables.
+The production server serves the built React app and the `/api/translate` endpoint together. Set `OPENROUTER_API_KEY` in your hosting provider's server-side environment variables.
 
 ## Checks
 
@@ -42,4 +42,4 @@ npm run build
 npm run lint
 ```
 
-Built with React, TypeScript, Vite, and the OpenAI Responses API.
+Built with React, TypeScript, Vite, and an OpenAI-compatible AI backend.

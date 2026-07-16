@@ -1,14 +1,14 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
-import { handleTranslateRequest } from './server/http.mjs'
+import { handleTranslateRequest, type TranslateServerOptions } from './server/http.mjs'
 
-function linkedOutApi(apiKey?: string, model?: string): Plugin {
+function linkedOutApi(options: TranslateServerOptions): Plugin {
   return {
     name: 'linkedout-api',
     configureServer(server) {
       server.middlewares.use('/api/translate', (request, response) => {
-        void handleTranslateRequest(request, response, { apiKey, model })
+        void handleTranslateRequest(request, response, options)
       })
     },
   }
@@ -16,12 +16,17 @@ function linkedOutApi(apiKey?: string, model?: string): Plugin {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '')
+  const usesOpenRouter = Boolean(env.OPENROUTER_API_KEY)
 
   return {
     plugins: [
       react(),
       babel({ presets: [reactCompilerPreset()] }),
-      linkedOutApi(env.OPENAI_API_KEY, env.OPENAI_MODEL),
+      linkedOutApi({
+        apiKey: usesOpenRouter ? env.OPENROUTER_API_KEY : env.OPENAI_API_KEY,
+        model: usesOpenRouter ? env.OPENROUTER_MODEL : env.OPENAI_MODEL,
+        provider: usesOpenRouter ? 'openrouter' : 'openai',
+      }),
     ],
   }
 })
