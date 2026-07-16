@@ -70,8 +70,9 @@ export async function generateLinkedOutPost({ thought, tone }, options = {}) {
           { role: 'system', content: instructions },
           { role: 'user', content: `SOURCE THOUGHT:\n${thought}` },
         ],
-        max_tokens: 550,
+        max_tokens: 700,
         temperature: 0.9,
+        reasoning: { effort: 'low', exclude: true },
       })
       post = response.choices[0]?.message?.content?.trim()
       responseModel = response.model
