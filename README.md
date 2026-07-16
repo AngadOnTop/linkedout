@@ -1,6 +1,6 @@
 # LinkedOut
 
-A Google Translate-style parody that uses real AI to convert painfully ordinary thoughts into gloriously obnoxious LinkedIn posts. It defaults to OpenRouter's free-model router and can optionally use OpenAI.
+A Google Translate-style parody that uses real AI to convert painfully ordinary thoughts into gloriously obnoxious LinkedIn posts. It defaults to a free OpenRouter model and can optionally use OpenAI.
 
 ## Setup
 
@@ -15,10 +15,10 @@ Edit `.env`:
 
 ```env
 OPENROUTER_API_KEY=your_openrouter_key_here
-OPENROUTER_MODEL=openai/gpt-oss-20b:free
+OPENROUTER_MODEL=google/gemma-4-31b-it:free
 ```
 
-The key is read only by the local server and is never included in the browser bundle. If `OPENROUTER_API_KEY` is absent, the server can still use the optional `OPENAI_API_KEY` configuration shown in `.env.example`.
+The model line is optional; Gemma 4 31B Instruct is the default, with Gemma 4 26B as an automatic fallback when the free provider is unavailable. The key is read only by the local server and is never included in the browser bundle. If `OPENROUTER_API_KEY` is absent, the server can still use the optional `OPENAI_API_KEY` configuration shown in `.env.example`.
 
 ## Development
 
