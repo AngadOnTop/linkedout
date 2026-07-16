@@ -104,7 +104,18 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ thought, tone }),
       })
-      const payload = await response.json() as ApiResponse
+      const responseText = await response.text()
+      let payload: ApiResponse
+
+      try {
+        payload = responseText ? JSON.parse(responseText) as ApiResponse : {}
+      } catch {
+        throw new Error('The deployed AI endpoint returned an invalid response. Check the Netlify Function logs.')
+      }
+
+      if (!responseText) {
+        throw new Error('The deployed AI endpoint returned no data. Check the Netlify Function deployment.')
+      }
 
       if (!response.ok || !payload.post) {
         throw new Error(payload.error || 'The AI returned an empty strategy deck.')

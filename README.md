@@ -35,6 +35,12 @@ npm start
 
 The production server serves the built React app and the `/api/translate` endpoint together. Set `OPENROUTER_API_KEY` in your hosting provider's server-side environment variables.
 
+## Netlify
+
+The included `netlify.toml` builds the Vite app and routes `/api/translate` to a Netlify Function. In Netlify, add `OPENROUTER_API_KEY` under **Project configuration → Environment variables**, make it available to Functions, and redeploy. `OPENROUTER_MODEL` is optional.
+
+Do not commit `.env`; Netlify does not receive your local environment file.
+
 ## Checks
 
 ```bash
